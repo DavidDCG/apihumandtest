@@ -24,8 +24,8 @@ const getModules = (req = request, res = response) => {
                 dataReturn.message = "consulta correcta";
                 dataReturn.data = dataReturnResult;            
             } else {
-                dataReturn.valid = true;
-                dataReturn.type = "success";
+                dataReturn.valid = false;
+                dataReturn.type = "error";
                 dataReturn.message = "Usuario o contraseña no reconocido";
                 dataReturn.data = [];
             }
