@@ -27,8 +27,8 @@ const generateTokenLogin = (req = request, res = response) => {
       const token = authMiddleware.generateToken(user);
       dataReturn.data = { token: token };
     } else {
-      dataReturn.valid = true;
-      dataReturn.type = "success";
+      dataReturn.valid = false;
+      dataReturn.type = "error";
       dataReturn.message = "Usuario o contraseña no reconocido";
       dataReturn.data = [];
     }
