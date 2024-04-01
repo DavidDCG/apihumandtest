@@ -1,9 +1,11 @@
 // app.js
 const express = require('express');
 const bodyParser = require('body-parser');
+const routesToken = require('./src/routes/token_routes');
+const routesLogin = require('./src/routes/login_routes');
+const routesCatalogs = require('./src/routes/catalogs_routes');
 const { connectToDatabase } = require('./config/db');
-const routesLogin = require('./src/routes/loginRoutes');
-const routesCatalogs = require('./src/routes/catalogsRoutes');
+
 require('dotenv').config();
 const cors = require('cors');
 const app = express();
@@ -16,10 +18,12 @@ app.use(express.json());
 // Configurar bodyParser para manejar las solicitudes JSON
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-// Conectar a la base de datos
+
 connectToDatabase().then((dataReturn) => {
   switch (dataReturn.valid) {
     case true:
+      // Conectar a la base de datos
+      app.use('/token', routesToken);
       app.use('/login', routesLogin);
       app.use('/catalogs', routesCatalogs);
       // Inicia el servidor
@@ -28,17 +32,18 @@ connectToDatabase().then((dataReturn) => {
         console.log(`Servidor en ejecución en el puerto ${PORT}`);
         // res.status(500).json({ error: `Servidor en ejecución en el puerto ${PORT}` });
       });
-      //const db = dataReturn.data.dataBase;
-      //const client = dataReturn.data.dataClient;
-      //return db.collection('Modulos').find({}).toArray();
+    //const db = dataReturn.data.dataBase;
+    //const client = dataReturn.data.dataClient;
+    //return db.collection('Modulos').find({}).toArray();
     case false:
       console.error(dataReturn.message);
       break;
   }
 }).catch((err) => {
-    console.error("error interno del servidor." + err)
-    //res.status(500).json({ error: 'Error interno del servidor' });
-  });
+  console.error("error interno del servidor." + err)
+  //res.status(500).json({ error: 'Error interno del servidor' });
+});
+
 // Manejo de errores no controlados
 app.use((err, req, res, next) => {
   console.error(err.stack);
