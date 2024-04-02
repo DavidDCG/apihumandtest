@@ -24,7 +24,7 @@ const get_areas = (req = request, res = response) => {
                         _id: 1,
                         cvecia: 1,
                         code_area: 1,
-                        description_area: 1,
+                        name: 1,
                         company_data: 1,
                         create_date: 1,
                         update_date: 1
@@ -241,7 +241,7 @@ const get_branch = (req = request, res = response) => {
                         create_date: 1,
                         update_date: 1,
                         code_branch: 1,
-                        name_branch: 1
+                        name: 1
                         
                     }
                 }
@@ -444,7 +444,7 @@ const get_companies = (req = request, res = response) => {
                         create_date: 1,
                         update_date: 1,
                         code_branch: 1,
-                        name_branch: 1
+                        name: 1
                     }
                 }
                 
